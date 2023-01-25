@@ -18,7 +18,7 @@ const getToday = async () => {
 };
 const getIsItSkipYear = async () => {
     let year = new Date().getFullYear()
-    // year = 2000; // for testing
+    // year = 2000; // type specific date for testing
     let test = year/4 - Math.floor(year/4)
     if (test === 0) {
         return true
@@ -101,5 +101,6 @@ const sendEmail = async () => {
         }
     }       
 };
+
 
 sendEmail();
