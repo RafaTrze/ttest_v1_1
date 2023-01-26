@@ -1,15 +1,22 @@
 const sqlite3 = require('sqlite3').verbose();
+const pino = require('pino')
+const logger = pino({
+  transport: {
+    target: 'pino-pretty'
+  },
+})
 
-let sql;
 // open database
+
 const db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
   if (err) {
-    return console.error(err);
+  return logger.error(err.message);
   }
   else {
-    console.log('connected');
+    logger.info('connected');
   }
 });
+
 
 // create table
 // let sql = `Create TABLE friendsdb(last_name, first_name, date_of_birth, email)`;
@@ -20,17 +27,18 @@ const db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) =
 // sql = `INSERT INTO friendsdb(last_name, first_name, date_of_birth, email) VALUES (?, ?, ?, ?)`;
 /* db.run(sql, [], (err) => {
     if (err) {
-        return console.error(err);
+        return logger.error(err,message);
     }
     else {
-        console.log('data added.');
+        logger.info('data added.');
     }
 });
 */
 
 
-sql = `SELECT * FROM friendsdb`
+
 const getFriendsDB = async () => {
+  const sql = `SELECT * FROM friendsdb`
   return new Promise((resolve, reject) => {
     db.all(sql, (err, rows) => {
       if (err) {
@@ -43,25 +51,20 @@ const getFriendsDB = async () => {
   })
 }
 
-/*
-const readFriendsDB = async () => {
-  const friends = await getFriendsDB();
-  console.log(`it works:`)
-  console.log(friends)
-}
-readFriendsDB();
-
-
 // close database
-db.close((err) => {
-  if (err) {
-    return console.error(err)
-  }
-  else {
-    console.log('closed')
-  }});
-*/
+const dbClose = () => {
+  db.close((err) => {
+    if (err) {
+      return logger.error(err.message)
+    }
+    else {
+      logger.info('closed')
+    }
+  })
+}
 
 module.exports = {
-  getFriendsDB
+  getFriendsDB,
+  dbClose
 }
+

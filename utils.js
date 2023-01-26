@@ -1,4 +1,3 @@
-
 const getToday = async () => { 
     let today;
     let newDate = new Date()

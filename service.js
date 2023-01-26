@@ -1,4 +1,10 @@
 
+const pino = require('pino')
+const logger = pino({
+  transport: {
+    target: 'pino-pretty'
+  },
+})
 const utils = require('./utils');
 const readCSV = require('./readcsv');
 const readDB = require('./readdb')
@@ -11,19 +17,19 @@ const sendEmail = async () => {
     const email = promiseArray[3];
     const friends = promiseArray[4];
     const feb29 = 'yyyy/02/29' 
-    // console.log(friends);
-    console.log(`It is: ${today}`)
-    // console.log(isItSkipYear)
+    // logger.info(friends);
+    // logger.info(`It is: ${today}`)
+    // logger.info(isItSkipYear)
 
     if (isItSkipYear) {
         friends.forEach((element) => {
             if (element.date_of_birth.substring(5) === today.substring(5)) {
-                console.log(`${email} ${element.first_name}!`)
+                logger.info(`${email} ${element.first_name}!`)
             }
             else {
                 // NO ACTION
                 // uncomment for testing:
-                // console.log(`It's skip year but it's not your birthday ${element.first_name}!`)
+                // logger.info(`It's skip year but it's not your birthday ${element.first_name}!`)
             }
         })
     }
@@ -31,24 +37,24 @@ const sendEmail = async () => {
         if (today.substring(5) === '02/28') {
             friends.forEach((element) => {
                 if (element.date_of_birth.substring(5) === today.substring(5) || element.date_of_birth.substring(5) === feb29.substring(5)) {
-                    console.log(`${email} ${element.first_name}!`)
+                    logger.info(`${email} ${element.first_name}!`)
                 }
                 else {
                     // NO ACTION
                     // uncomment for testing:
-                    // console.log(`It isn't skip year and it's not your birthday ${element.first_name}!`)
+                    // logger.info(`It isn't skip year and it's not your birthday ${element.first_name}!`)
                 }
             })  
         }
         else {
             friends.forEach((element) => {
                 if (element.date_of_birth.substring(5) === today.substring(5)) {
-                    console.log(`${email} ${element.first_name}!`)
+                    logger.info(`${email} ${element.first_name}!`)
                 }
                 else {
                     // NO ACTION
                     // uncomment for testing:
-                    // console.log(`It isn't skip year, it isn't 02/28 and it's not your birthday ${element.first_name}!`)
+                    // logger.info(`It isn't skip year, it isn't 02/28 and it's not your birthday ${element.first_name}!`)
                 }
             })
         }
@@ -63,19 +69,19 @@ const sendSMS = async () => {
     const sms = promiseArray[3];
     // const friends = promiseArray[4];
     const feb29 = 'yyyy/02/29' 
-    // console.log(friends);
-    console.log(`It is: ${today}`)
-    // console.log(isItSkipYear)
+    // logger.info(friends);
+    // logger.info(`It is: ${today}`)
+    // logger.info(isItSkipYear)
 
     if (isItSkipYear) {
         friends.forEach((element) => {
             if (element.date_of_birth.substring(5) === today.substring(5)) {
-                console.log(`${sms} ${element.first_name}!`)
+                logger.info(`${sms} ${element.first_name}!`)
             }
             else {
                 // NO ACTION
                 // uncomment for testing:
-                // console.log(`It's skip year but it's not your birthday ${element.first_name}!`)
+                // logger.info(`It's skip year but it's not your birthday ${element.first_name}!`)
             }
         })
     }
@@ -83,24 +89,24 @@ const sendSMS = async () => {
         if (today.substring(5) === '02/28') {
             friends.forEach((element) => {
                 if (element.date_of_birth.substring(5) === today.substring(5) || element.date_of_birth.substring(5) === feb29.substring(5)) {
-                    console.log(`${sms} ${element.first_name}!`)
+                    logger.info(`${sms} ${element.first_name}!`)
                 }
                 else {
                     // NO ACTION
                     // uncomment for testing:
-                    // console.log(`It isn't skip year and it's not your birthday ${element.first_name}!`)
+                    // logger.info(`It isn't skip year and it's not your birthday ${element.first_name}!`)
                 }
             })  
         }
         else {
             friends.forEach((element) => {
                 if (element.date_of_birth.substring(5) === today.substring(5)) {
-                    console.log(`${sms} ${element.first_name}!`)
+                    logger.info(`${sms} ${element.first_name}!`)
                 }
                 else {
                     // NO ACTION
                     // uncomment for testing:
-                    // console.log(`It isn't skip year, it isn't 02/28 and it's not your birthday ${element.first_name}!`)
+                    // logger.info(`It isn't skip year, it isn't 02/28 and it's not your birthday ${element.first_name}!`)
                 }
             })
         }
