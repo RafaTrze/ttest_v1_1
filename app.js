@@ -10,4 +10,5 @@ const readDB = require('./readdb')
 
 service.sendEmail();
 service.sendSMS();
+
 readDB.dbClose();
